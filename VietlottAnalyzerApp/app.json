@@ -1,0 +1,66 @@
+{
+  "expo": {
+    "name": "Vietlott Analyzer",
+    "slug": "vietlott-analyzer",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/images/icon.png",
+    "scheme": "vietlottanalyzer",
+    "userInterfaceStyle": "automatic",
+    "newArchEnabled": true,
+    "description": "AI-powered lottery analysis for Vietnam Vietlott Power 6/55 and Mega 6/45. Get smart predictions, statistical analysis, and historical data insights.",
+    "privacy": "public",
+    "platforms": ["ios", "android", "web"],
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.vietlottanalyzer.app",
+      "buildNumber": "1"
+    },
+    "android": {
+      "package": "com.vietlottanalyzer.app",
+      "versionCode": 1,
+      "compileSdkVersion": 34,
+      "targetSdkVersion": 34,
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/images/adaptive-icon.png",
+        "backgroundColor": "#ffffff"
+      },
+      "edgeToEdgeEnabled": true,
+      "permissions": ["INTERNET", "ACCESS_NETWORK_STATE", "VIBRATE"],
+      "playStoreUrl": "https://play.google.com/store/apps/details?id=com.vietlottanalyzer.app"
+    },
+    "web": {
+      "bundler": "metro",
+      "output": "static",
+      "favicon": "./assets/images/favicon.png"
+    },
+    "plugins": [
+      "expo-router",
+      [
+        "expo-splash-screen",
+        {
+          "image": "./assets/images/splash-icon.png",
+          "imageWidth": 200,
+          "resizeMode": "contain",
+          "backgroundColor": "#ffffff"
+        }
+      ],
+      [
+        "expo-notifications",
+        {
+          "icon": "./assets/images/notification-icon.png",
+          "color": "#ffffff",
+          "sounds": ["./assets/sounds/notification.wav"]
+        }
+      ]
+    ],
+    "experiments": {
+      "typedRoutes": true
+    },
+    "extra": {
+      "eas": {
+        "projectId": "vietlott-analyzer-app"
+      }
+    }
+  }
+}
