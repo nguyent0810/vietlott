@@ -8,6 +8,19 @@ if (typeof window !== 'undefined') {
   console.log('🤖 Vietlott AI Predictor - Automation Setup');
   console.log('==========================================');
 
+  // Wait for services to be loaded
+  const waitForServices = () => {
+    if (typeof window.setupAutomation !== 'undefined') {
+      console.log('✅ Services already loaded');
+      return;
+    }
+
+    console.log('⏳ Waiting for services to load...');
+    setTimeout(waitForServices, 1000);
+  };
+
+  waitForServices();
+
   // Configuration object
   const automationConfig = {
     email: {

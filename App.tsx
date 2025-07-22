@@ -16,6 +16,8 @@ import { SubscriptionModal } from './components/SubscriptionModal';
 import { AdminDashboard } from './components/AdminDashboard';
 import { automatedSchedulerService } from './services/automatedSchedulerService';
 import { emailNotificationService } from './services/emailNotificationService';
+// Import service loader to make services globally available
+import './services/serviceLoader';
 
 const App: React.FC = () => {
   const [selectedLottery, setSelectedLottery] = useState<LotteryType>(LOTTERY_TYPES.POWER);
