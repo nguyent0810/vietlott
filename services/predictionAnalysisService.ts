@@ -1,4 +1,4 @@
-import { LotteryType, DrawResult, PredictionRecord } from '../types.ts';
+import { LotteryType, DrawResult, PredictionRecord } from '../types';
 
 /**
  * Prediction Analysis Service

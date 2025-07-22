@@ -1,5 +1,5 @@
-import { LotteryType } from '../types.ts';
-import { LOTTERY_TYPES } from '../constants.ts';
+import { LotteryType } from '../types';
+import { LOTTERY_TYPES } from '../constants';
 
 /**
  * Vietnamese Lottery Schedule Service

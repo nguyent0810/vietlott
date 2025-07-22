@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { automatedSchedulerService } from '../services/automatedSchedulerService.ts';
-import { emailNotificationService } from '../services/emailNotificationService.ts';
-import { predictionAnalysisService } from '../services/predictionAnalysisService.ts';
+import { automatedSchedulerService } from '../services/automatedSchedulerService';
+import { emailNotificationService } from '../services/emailNotificationService';
+import { predictionAnalysisService } from '../services/predictionAnalysisService';
 
 interface AdminDashboardProps {
   isOpen: boolean;

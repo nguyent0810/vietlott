@@ -12,10 +12,10 @@ import { NumberInspectorModal } from './components/NumberInspectorModal.tsx';
 import { SimulationControls } from './components/SimulationControls.tsx';
 import { SimulationResultModal } from './components/SimulationResultModal.tsx';
 import { ApiKeyModal } from './components/ApiKeyModal.tsx';
-import { SubscriptionModal } from './components/SubscriptionModal.tsx';
-import { AdminDashboard } from './components/AdminDashboard.tsx';
-import { automatedSchedulerService } from './services/automatedSchedulerService.ts';
-import { emailNotificationService } from './services/emailNotificationService.ts';
+import { SubscriptionModal } from './components/SubscriptionModal';
+import { AdminDashboard } from './components/AdminDashboard';
+import { automatedSchedulerService } from './services/automatedSchedulerService';
+import { emailNotificationService } from './services/emailNotificationService';
 
 const App: React.FC = () => {
   const [selectedLottery, setSelectedLottery] = useState<LotteryType>(LOTTERY_TYPES.POWER);

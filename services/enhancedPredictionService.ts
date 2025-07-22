@@ -1,7 +1,7 @@
-import { LotteryType, DrawResult, PredictionRecord } from '../types.ts';
-import { predictionAnalysisService } from './predictionAnalysisService.ts';
-import { lotteryDataService } from './lotteryDataService.ts';
-import { generateGeminiPrediction } from './geminiService.ts';
+import { LotteryType, DrawResult, PredictionRecord } from '../types';
+import { predictionAnalysisService } from './predictionAnalysisService';
+import { lotteryDataService } from './lotteryDataService';
+import { getPrediction } from './geminiService';
 
 /**
  * Enhanced AI Prediction Service
@@ -131,11 +131,18 @@ export class EnhancedPredictionService {
     context: PredictionContext
   ): Promise<PredictionRecord> {
     try {
-      // Prepare enhanced prompt with statistical context
-      const enhancedPrompt = this.buildEnhancedPrompt(lotteryType, context);
-      
-      // Generate prediction using Gemini with enhanced context
-      return await generateGeminiPrediction(lotteryType, context.recentDraws, enhancedPrompt);
+      // Generate prediction using Gemini with BALANCED strategy
+      const result = await getPrediction(lotteryType, context.recentDraws, 'BALANCED');
+
+      return {
+        id: `enhanced_${Date.now()}`,
+        numbers: result.predictedNumbers,
+        lotteryType,
+        date: new Date().toISOString().split('T')[0],
+        confidence: 0.7, // Base confidence, will be enhanced later
+        reasoning: result.reasoning,
+        specialNumber: result.specialNumber
+      };
     } catch (error) {
       console.warn('Failed to generate AI prediction, using statistical fallback:', error);
       return this.generateStatisticalFallback(lotteryType, context);

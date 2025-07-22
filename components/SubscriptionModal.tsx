@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { LotteryType } from '../types.ts';
-import { LOTTERY_TYPES } from '../constants.ts';
-import { emailNotificationService, EmailSubscriber } from '../services/emailNotificationService.ts';
+import { LotteryType } from '../types';
+import { LOTTERY_TYPES } from '../constants';
+import { emailNotificationService, EmailSubscriber } from '../services/emailNotificationService';
 
 interface SubscriptionModalProps {
   isOpen: boolean;

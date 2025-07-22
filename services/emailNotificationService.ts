@@ -1,6 +1,6 @@
-import { LotteryType } from '../types.ts';
-import { EnhancedPrediction } from './enhancedPredictionService.ts';
-import { lotteryScheduleService } from './lotteryScheduleService.ts';
+import { LotteryType } from '../types';
+import { EnhancedPrediction } from './enhancedPredictionService';
+import { lotteryScheduleService } from './lotteryScheduleService';
 
 /**
  * Email Notification Service

@@ -1,9 +1,9 @@
-import { LotteryType } from '../types.ts';
-import { lotteryScheduleService } from './lotteryScheduleService.ts';
-import { lotteryDataService } from './lotteryDataService.ts';
-import { predictionAnalysisService } from './predictionAnalysisService.ts';
-import { enhancedPredictionService } from './enhancedPredictionService.ts';
-import { emailNotificationService } from './emailNotificationService.ts';
+import { LotteryType } from '../types';
+import { lotteryScheduleService } from './lotteryScheduleService';
+import { lotteryDataService } from './lotteryDataService';
+import { predictionAnalysisService } from './predictionAnalysisService';
+import { enhancedPredictionService } from './enhancedPredictionService';
+import { emailNotificationService } from './emailNotificationService';
 
 /**
  * Automated Scheduler Service

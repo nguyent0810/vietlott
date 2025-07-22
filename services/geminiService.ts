@@ -1,6 +1,6 @@
 import { GoogleGenAI, Type } from "@google/genai";
-import { LotteryType, DrawResult, LotteryConfig, AIStrategy } from '../types.ts';
-import { LOTTERY_CONFIG, AI_STRATEGIES } from '../constants.ts';
+import { LotteryType, DrawResult, LotteryConfig, AIStrategy } from '../types';
+import { LOTTERY_CONFIG, AI_STRATEGIES } from '../constants';
 
 function getAiClient() {
   const apiKey = sessionStorage.getItem('geminiApiKey');
