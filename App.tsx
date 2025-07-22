@@ -36,19 +36,25 @@ const App: React.FC = () => {
 
   // Initialize automation services
   useEffect(() => {
-    // Initialize email service (in production, you'd get this config from environment variables)
+    // Initialize email service with stored credentials or environment variables
+    const smtpUser = localStorage.getItem('smtpUser') || import.meta.env.VITE_SMTP_USER || '';
+    const smtpPassword = localStorage.getItem('smtpPassword') || import.meta.env.VITE_SMTP_PASSWORD || '';
+
     const emailConfig = {
-      smtpHost: 'smtp.gmail.com',
-      smtpPort: 587,
+      smtpHost: import.meta.env.VITE_SMTP_HOST || 'smtp.gmail.com',
+      smtpPort: parseInt(import.meta.env.VITE_SMTP_PORT || '587'),
       smtpSecure: false,
-      smtpUser: process.env.SMTP_USER || '',
-      smtpPassword: process.env.SMTP_PASSWORD || '',
-      fromEmail: 'noreply@vietlott-ai.com',
-      fromName: 'Vietlott AI Predictor'
+      smtpUser,
+      smtpPassword,
+      fromEmail: import.meta.env.VITE_FROM_EMAIL || 'noreply@vietlott-ai.com',
+      fromName: import.meta.env.VITE_FROM_NAME || 'Vietlott AI Predictor'
     };
 
     if (emailConfig.smtpUser && emailConfig.smtpPassword) {
       emailNotificationService.initialize(emailConfig);
+      console.log('✅ Email service initialized');
+    } else {
+      console.log('⚠️ Email service not initialized - missing SMTP credentials');
     }
 
     // Initialize automation scheduler
