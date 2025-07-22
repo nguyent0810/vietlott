@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Automation System Test Runner</title>
+    <style>
+        body {
+            font-family: 'Courier New', monospace;
+            background: #1a1a1a;
+            color: #00ff00;
+            padding: 20px;
+            margin: 0;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            border-bottom: 2px solid #00ff00;
+            padding-bottom: 20px;
+        }
+        .test-section {
+            background: #2a2a2a;
+            border: 1px solid #00ff00;
+            border-radius: 5px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        .test-result {
+            margin: 10px 0;
+            padding: 5px;
+        }
+        .pass { color: #00ff00; }
+        .fail { color: #ff0000; }
+        .warning { color: #ffaa00; }
+        .info { color: #00aaff; }
+        button {
+            background: #00ff00;
+            color: #000;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            margin: 10px;
+        }
+        button:hover {
+            background: #00cc00;
+        }
+        #output {
+            background: #000;
+            border: 1px solid #00ff00;
+            padding: 20px;
+            height: 400px;
+            overflow-y: auto;
+            white-space: pre-wrap;
+            font-size: 12px;
+        }
+        .status-indicator {
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+        .status-running { background: #ffaa00; }
+        .status-pass { background: #00ff00; }
+        .status-fail { background: #ff0000; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🤖 Automated Lottery System Test Runner</h1>
+            <p>Comprehensive testing suite for your automation system</p>
+        </div>
+
+        <div class="test-section">
+            <h2>🧪 Test Controls</h2>
+            <button onclick="runQuickTest()">Quick Test</button>
+            <button onclick="runFullTest()">Full System Test</button>
+            <button onclick="testConfiguration()">Test Configuration</button>
+            <button onclick="testEmailSystem()">Test Email System</button>
+            <button onclick="clearOutput()">Clear Output</button>
+        </div>
+
+        <div class="test-section">
+            <h2>📊 System Status</h2>
+            <div id="systemStatus">
+                <div><span class="status-indicator status-running"></span>Checking system status...</div>
+            </div>
+        </div>
+
+        <div class="test-section">
+            <h2>📋 Test Output</h2>
+            <div id="output">Ready to run tests...\n\nClick a test button above to begin.\n</div>
+        </div>
+    </div>
+
+    <script>
+        // Output management
+        function log(message, type = 'info') {
+            const output = document.getElementById('output');
+            const timestamp = new Date().toLocaleTimeString();
+            const prefix = type === 'pass' ? '✅' : type === 'fail' ? '❌' : type === 'warning' ? '⚠️' : 'ℹ️';
+            output.textContent += `[${timestamp}] ${prefix} ${message}\n`;
+            output.scrollTop = output.scrollHeight;
+        }
+
+        function clearOutput() {
+            document.getElementById('output').textContent = 'Output cleared.\n';
+        }
+
+        // Quick configuration test
+        function testConfiguration() {
+            log('Testing system configuration...', 'info');
+            
+            try {
+                // Check credentials
+                const smtpUser = localStorage.getItem('smtpUser');
+                const smtpPassword = localStorage.getItem('smtpPassword');
+                const geminiKey = sessionStorage.getItem('geminiApiKey');
+                
+                log(`SMTP User: ${smtpUser || 'NOT SET'}`, smtpUser ? 'pass' : 'fail');
+                log(`SMTP Password: ${smtpPassword ? 'SET' : 'NOT SET'}`, smtpPassword ? 'pass' : 'fail');
+                log(`Gemini API Key: ${geminiKey ? geminiKey.substring(0, 10) + '...' : 'NOT SET'}`, geminiKey ? 'pass' : 'fail');
+                
+                // Check automation config
+                const automationConfig = JSON.parse(localStorage.getItem('automationConfig') || '{}');
+                log(`Automation Config: ${Object.keys(automationConfig).length} keys`, Object.keys(automationConfig).length > 0 ? 'pass' : 'fail');
+                
+                log('Configuration test completed.', 'info');
+                
+            } catch (error) {
+                log(`Configuration test failed: ${error.message}`, 'fail');
+            }
+        }
+
+        // Test email system
+        function testEmailSystem() {
+            log('Testing email system...', 'info');
+            
+            try {
+                // Check if email service is available
+                if (typeof emailNotificationService !== 'undefined') {
+                    const stats = emailNotificationService.getDeliveryStats();
+                    log(`Total Subscribers: ${stats.totalSubscribers}`, 'pass');
+                    log(`Active Subscribers: ${stats.activeSubscribers}`, 'pass');
+                    
+                    const subscribers = emailNotificationService.getActiveSubscribers();
+                    log(`Subscriber Details: ${subscribers.length} found`, 'info');
+                    
+                    subscribers.forEach((sub, index) => {
+                        log(`  ${index + 1}. ${sub.email} - ${sub.preferences.lotteryTypes.join(', ')}`, 'info');
+                    });
+                    
+                } else {
+                    log('Email service not available', 'fail');
+                }
+                
+            } catch (error) {
+                log(`Email system test failed: ${error.message}`, 'fail');
+            }
+        }
+
+        // Quick system test
+        function runQuickTest() {
+            log('Starting quick system test...', 'info');
+            log('================================', 'info');
+            
+            // Test 1: Configuration
+            testConfiguration();
+            
+            // Test 2: Services
+            log('Testing core services...', 'info');
+            const services = [
+                'automatedSchedulerService',
+                'emailNotificationService',
+                'lotteryScheduleService'
+            ];
+            
+            services.forEach(service => {
+                const available = typeof window[service] !== 'undefined';
+                log(`${service}: ${available ? 'AVAILABLE' : 'NOT FOUND'}`, available ? 'pass' : 'fail');
+            });
+            
+            // Test 3: Email system
+            testEmailSystem();
+            
+            log('Quick test completed.', 'info');
+        }
+
+        // Full system test
+        function runFullTest() {
+            log('Starting full system test...', 'info');
+            log('This will run comprehensive tests on all components...', 'info');
+            
+            // Load and run the comprehensive test script
+            fetch('./test-automation-system.js')
+                .then(response => response.text())
+                .then(script => {
+                    // Redirect console.log to our output
+                    const originalLog = console.log;
+                    console.log = function(...args) {
+                        log(args.join(' '), 'info');
+                        originalLog.apply(console, args);
+                    };
+                    
+                    // Execute the test script
+                    eval(script);
+                    
+                    // Restore console.log
+                    console.log = originalLog;
+                })
+                .catch(error => {
+                    log(`Failed to load test script: ${error.message}`, 'fail');
+                });
+        }
+
+        // Update system status
+        function updateSystemStatus() {
+            const statusDiv = document.getElementById('systemStatus');
+            
+            try {
+                const hasConfig = !!localStorage.getItem('smtpUser') && !!sessionStorage.getItem('geminiApiKey');
+                const hasServices = typeof automatedSchedulerService !== 'undefined';
+                const hasSubscribers = typeof emailNotificationService !== 'undefined' && 
+                                     emailNotificationService.getActiveSubscribers().length > 0;
+                
+                let status = '';
+                
+                if (hasConfig && hasServices && hasSubscribers) {
+                    status = '<div><span class="status-indicator status-pass"></span>System Ready - All components operational</div>';
+                } else {
+                    status = '<div><span class="status-indicator status-fail"></span>System Needs Configuration</div>';
+                    if (!hasConfig) status += '<div>❌ Missing credentials</div>';
+                    if (!hasServices) status += '<div>❌ Services not loaded</div>';
+                    if (!hasSubscribers) status += '<div>❌ No subscribers configured</div>';
+                }
+                
+                statusDiv.innerHTML = status;
+                
+            } catch (error) {
+                statusDiv.innerHTML = '<div><span class="status-indicator status-fail"></span>Error checking system status</div>';
+            }
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            log('Test runner initialized. Ready to run tests.', 'info');
+            updateSystemStatus();
+            
+            // Update status every 5 seconds
+            setInterval(updateSystemStatus, 5000);
+        });
+    </script>
+</body>
+</html>
